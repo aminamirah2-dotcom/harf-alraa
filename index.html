@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مغامرة حرف الراء - المعلم أمين عميرة</title>
+
+<style>
+body{
+margin:0;
+font-family:Tahoma,Arial,sans-serif;
+background:linear-gradient(135deg,#fff3bd,#dff7ff,#f4ddff);
+min-height:100vh;
+color:#26344d;
+}
+
+.card{
+max-width:720px;
+margin:25px auto;
+padding:25px;
+background:white;
+border-radius:28px;
+box-shadow:0 12px 35px #0002;
+text-align:center;
+}
+
+h1{
+color:#7b35b5;
+font-size:40px;
+}
+
+.badge{
+display:inline-block;
+background:#ffe16b;
+padding:9px 18px;
+border-radius:30px;
+font-weight:bold;
+}
+
+.big{
+font-size:120px;
+color:#e65d9d;
+}
+
+.question{
+font-size:27px;
+font-weight:bold;
+margin:25px 0;
+}
+
+.answers{
+display:grid;
+gap:12px;
+}
+
+button{
+border:0;
+border-radius:18px;
+padding:15px;
+font:20px Tahoma;
+cursor:pointer;
+background:#eef3ff;
+}
+
+button:hover{
+transform:scale(1.02);
+}
+
+.primary{
+background:#7b35b5;
+color:white;
+}
+
+.next{
+background:#ffb52e;
+margin-top:18px;
+}
+
+.correct{
+background:#b8f3bf!important;
+}
+
+.wrong{
+background:#ffbcbc!important;
+}
+
+.feedback{
+font-size:21px;
+font-weight:bold;
+min-height:45px;
+margin:14px;
+}
+
+.progress{
+height:13px;
+background:#eee;
+border-radius:20px;
+overflow:hidden;
+margin:18px;
+}
+
+.bar{
+height:100%;
+background:#55b9df;
+width:0;
+transition:.4s;
+}
+
+.hidden{
+display:none;
+}
+
+.stage{
+font-weight:bold;
+color:#607086;
+font-size:18px;
+}
+
+footer{
+color:#777;
+margin-top:20px;
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="badge">
+🌟 رحلة التعارف مع حرف الراء 🌟
+</div>
+
+<h1>مغامرة حرف الراء</h1>
+
+<p>
+الصف الأول الأساسي • بداية الفصل الدراسي
+</p>
+
+<section id="start">
+
+<div class="big">ر</div>
+
+<div class="question">
+هل أنت مستعد لاكتشاف حرف الراء؟
+</div>
+
+<button class="primary" onclick="start()">
+🚀 ابدأ المغامرة
+</button>
+
+</section>
+
+
+<section id="game" class="hidden">
+
+<div class="stage" id="stage"></div>
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<div class="question" id="q"></div>
+
+<div class="answers" id="answers"></div>
+
+<div class="feedback" id="feedback"></div>
+
+<button
+class="next hidden"
+id="next"
+onclick="next()">
+السؤال التالي ➜
+</button>
+
+</section>
+
+
+<section id="finish" class="hidden">
+
+<div class="big">🎉</div>
+
+<h1>
+أحسنت يا بطل!
+</h1>
+
+<div class="question" id="result"></div>
+
+<p>
+🌈 بداية فصل دراسي جميلة ومليئة بالتعلم والنجاح!
+</p>
+
+<button
+class="primary"
+onclick="location.reload()">
+🔄 العب مرة أخرى
+</button>
+
+</section>
+
+
+<footer>
+إعداد وتصميم: المعلم أمين عميرة © 2026
+<br>
+رخصة المشاع الإبداعي:
+CC BY-NC-SA 4.0
+</footer>
+
+</div>
+
+
+<script>
+
+const qs=[
+
+[
+"المحطة الأولى: التعارف",
+"أي كلمة تبدأ بحرف الراء؟",
+["رمان","تفاح","موز","باب"],
+0
+],
+
+[
+"المحطة الأولى: التعارف",
+"أين حرف الراء في كلمة «رَسَمَ»؟",
+["في البداية","في الوسط","في النهاية","لا يوجد"],
+0
+],
+
+[
+"المحطة الثانية: اكتشف",
+"أي كلمة فيها حرف الراء؟",
+["ورد","كتاب","قلم","بيت"],
+0
+],
+
+[
+"المحطة الثانية: اكتشف",
+"اختر الحرف الصحيح: __مان",
+["ر","ز","د","ب"],
+0
+],
+
+[
+"المحطة الثالثة: فكّر",
+"أي كلمة تنتهي بحرف الراء؟",
+["قمر","رمان","ربيع","رجل"],
+0
+],
+
+[
+"المحطة الثالثة: فكّر",
+"اختر الكلمة التي تحتوي على حرف الراء في الوسط.",
+["جَرَس","رَسَم","قَمَر","رَجل"],
+0
+],
+
+[
+"المحطة الرابعة: تحدي الأبطال",
+"كم مرة يظهر حرف الراء في «رَبيعٌ جميلٌ»؟",
+["مرة واحدة","مرتان","ثلاث مرات","أربع مرات"],
+1
+],
+
+[
+"المحطة الرابعة: تحدي الأبطال",
+"أي كلمة تبدأ بحرف الراء؟",
+["رجل","قلم","كتاب","بيت"],
+0
+]
+
+];
+
+
+let n=0;
+let score=0;
+let done=false;
+
+
+function sound(ok){
+
+try{
+
+let c=new(window.AudioContext||window.webkitAudioContext);
+
+let o=c.createOscillator();
+
+let g=c.createGain();
+
+o.frequency.value=ok?700:220;
+
+o.connect(g);
+
+g.connect(c.destination);
+
+g.gain.value=.08;
+
+o.start();
+
+setTimeout(()=>{
+
+o.stop();
+c.close();
+
+},180);
+
+}catch(e){}
+
+}
+
+
+function start(){
+
+document.getElementById("start")
+.classList.add("hidden");
+
+document.getElementById("game")
+.classList.remove("hidden");
+
+show();
+
+}
+
+
+function show(){
+
+done=false;
+
+let x=qs[n];
+
+document.getElementById("stage")
+.textContent=x[0];
+
+document.getElementById("q")
+.textContent=(n+1)+". "+x[1];
+
+document.getElementById("bar")
+.style.width=(n/qs.length*100)+"%";
+
+document.getElementById("feedback")
+.textContent="";
+
+document.getElementById("next")
+.classList.add("hidden");
+
+let answers=document.getElementById("answers");
+
+answers.innerHTML="";
+
+
+x[2].forEach((a,k)=>{
+
+let b=document.createElement("button");
+
+b.textContent=a;
+
+b.onclick=()=>choose(k,b);
+
+answers.appendChild(b);
+
+});
+
+}
+
+
+function choose(k,b){
+
+if(done)return;
+
+done=true;
+
+let x=qs[n];
+
+let answers=document.getElementById("answers");
+
+[...answers.children]
+.forEach(x=>x.disabled=true);
+
+
+if(k===x[3]){
+
+score++;
+
+b.classList.add("correct");
+
+document.getElementById("feedback")
+.textContent="🌟 أحسنت! إجابة رائعة 👏";
+
+sound(true);
+
+}else{
+
+b.classList.add("wrong");
+
+answers.children[x[3]]
+.classList.add("correct");
+
+document.getElementById("feedback")
+.textContent="💛 حاول مرة أخرى! الإجابة الصحيحة أمامك.";
+
+sound(false);
+
+}
+
+
+document.getElementById("next")
+.classList.remove("hidden");
+
+}
+
+
+function next(){
+
+n++;
+
+if(n<qs.length){
+
+show();
+
+}else{
+
+document.getElementById("game")
+.classList.add("hidden");
+
+document.getElementById("finish")
+.classList.remove("hidden");
+
+document.getElementById("result")
+.textContent=
+"حصلت على "+
+score+
+" من "+
+qs.length+
+" ⭐ — أنت بطل حرف الراء!";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
